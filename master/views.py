@@ -24,3 +24,18 @@ def add_task(request):
     else:
         form = TaskForm()
     return render(request, 'master/add_task.html', {'form': form})
+
+def edit_task(request, id):
+    task = Tasks.objects.get(id=id)
+    if request.method == "POST":
+        new_task = request.POST["task"]
+        task.task = new_task
+        task.save()
+        return redirect("task_list")
+    
+    return render(request, "master/edit_task.html", {"task":task})
+
+def delete_task(request, id):
+    task = Tasks.objects.get(id=id)
+    task.delete()
+    return redirect("task_list")

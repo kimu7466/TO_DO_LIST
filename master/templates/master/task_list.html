@@ -10,12 +10,51 @@
 <body>
     <div class="container">
         <h1>To-Do List</h1>
+        <a href="{% url 'add_task' %}" class="add-task-btn">Add Task</a>
         <ul class="task-list">
             {% for task in tasks %}
-                <li>{{ task.task }}</li>
+            <div class="task-list-row">
+
+                <div class="task_li_div">
+                    <li class="task_li">{{ task.task }}</li>
+                </div>
+                <div class="buttons_div">
+                    <a href="{% url 'edit_task' id=task.id %}" class="edit green">
+                        Edit
+                    </a>
+                    <a class="delete red">
+                        Delete
+                    </a>
+                    <a href="{% url 'delete_task' id=task.id %}" id="delete_link" style="display: none;"></a>
+                </div>
+            </div>
             {% endfor %}
         </ul>
-        <a href="{% url 'add_task' %}" class="add-task-btn">Add Task</a>
     </div>
+
+    <script src="{% static 'master/script.js' %}"></script>
+    <script>
+        let list_li = document.querySelectorAll(".task_li")
+        let edit_btn = document.querySelectorAll(".edit")
+        list_li.forEach((element, index) => {
+            element.addEventListener("click", ()=>{
+                console.log(element);
+                edit_btn[index].click();
+                
+            }) 
+        });
+
+        let delete_btn = document.querySelector('.delete')
+        let delete_link = document.getElementById("delete_link")
+        delete_btn.addEventListener("click", ()=>{
+            const userConfirmed = confirm("Are you sure you want to delete this item?");
+            // console.log(userConfirmed);
+            if (userConfirmed){
+                delete_link.click()
+            }
+
+        })
+    
+    </script>
 </body>
 </html>

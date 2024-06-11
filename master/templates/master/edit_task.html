@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="{% static 'master/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>EDIT Task</h1>
+
+        <form action="{% url 'edit_task' id=task.id %}" method="POST">
+            {% csrf_token %}
+            <p>
+                <label for="id_task">Task:</label>
+                <textarea name="task" cols="40" rows="10" maxlength="10000" required aria-invalid="true" id="id_task">{{ task.task }}</textarea>
+            </p>
+            <button type="submit" class="submit-btn">UPDATE</button>
+        </form>
+        <a href="{% url 'task_list' %}" class="back-btn">Back to List</a>
+    </div>
+
+</body>
+</html>
