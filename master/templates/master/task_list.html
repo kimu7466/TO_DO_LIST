@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
     <link rel="stylesheet" href="{% static 'master/styles.css' %}">
+    <style>
+        .task_li{
+            background-color: rgb(209, 209, 209);
+            font-weight: 500;
+        }
+        .task_li:hover{
+            color: green;
+            background-color: rgb(175, 175, 175);
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -25,7 +36,7 @@
                     <a class="delete red">
                         Delete
                     </a>
-                    <a href="{% url 'delete_task' id=task.id %}" id="delete_link" style="display: none;"></a>
+                    <a href="{% url 'delete_task' id=task.id %}" class="delete_link" style="display: none;"></a>
                 </div>
             </div>
             {% endfor %}
@@ -37,23 +48,27 @@
         let list_li = document.querySelectorAll(".task_li")
         let edit_btn = document.querySelectorAll(".edit")
         list_li.forEach((element, index) => {
+
             element.addEventListener("click", ()=>{
-                console.log(element);
                 edit_btn[index].click();
-                
             }) 
+            
         });
 
-        let delete_btn = document.querySelector('.delete')
-        let delete_link = document.getElementById("delete_link")
-        delete_btn.addEventListener("click", ()=>{
-            const userConfirmed = confirm("Are you sure you want to delete this item?");
-            // console.log(userConfirmed);
-            if (userConfirmed){
-                delete_link.click()
-            }
+        let delete_btn = document.querySelectorAll('.delete')
+        let delete_link = document.querySelectorAll(".delete_link")
+        delete_btn.forEach((element, index) => {
 
-        })
+            element.addEventListener("click", ()=>{
+
+                const userConfirmed = confirm("Are you sure you want to delete this item?");
+                if (userConfirmed){
+                    delete_link[index].click()
+                }
+                
+            }) 
+
+        });
     
     </script>
 </body>
